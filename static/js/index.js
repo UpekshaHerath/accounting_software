@@ -1,14 +1,11 @@
 let useful_life;
 
 function LSB() {
-    console.log('Working');
     let cost = document.forms['SLB_form'].cost.value;
     let scrp_value = document.forms['SLB_form'].scrp_value.value;
     let useful_life = document.forms['SLB_form'].useful_life.value;
 
     let dipreciation_value = SLB_calculate(cost, scrp_value, useful_life);
-    console.log(dipreciation_value);
-    console.log(cost);
 
     document.getElementById('answer').textContent = "Depreciation Value ( LKR ) : " + dipreciation_value;
 
@@ -21,22 +18,18 @@ function LSB() {
 
 function dropdown_select() {
     let select_value = document.getElementById('floatingSelect').value;
-    console.log(select_value);
     switch(select_value) {
         case '1' : 
-            console.log('One');
             reset_form();
             document.getElementById('SLB').style.display = "block";
             document.getElementById('PUB').style.display = "none";
             break;
         case '2' : 
-            console.log('Two');
             reset_form();
             document.getElementById('SLB').style.display = "block";
             document.getElementById('PUB').style.display = "none";
             break;
         case '3' : 
-            console.log('Three');
             reset_form_PUB();
             document.getElementById('answer_PUB').textContent = "Answer";
             document.getElementById('PUB').style.display = "block";
@@ -48,26 +41,22 @@ function dropdown_select() {
 }
 
 function PUB() {
-    console.log('pub started');
     let total_PUB = 0;
     let total_units = 0;
     let production_from_yeartoyear = new Array();
+
     for (let i = 1; i <= useful_life; i++) {
         let id_value = 'year-'+i; 
-        console.log(id_value);
         let production_per_year = document.getElementById(id_value).value;
         production_from_yeartoyear.push(parseInt(production_per_year));
         total_units += parseInt(production_per_year);
-        console.log(production_per_year);
     }
-    console.log(total_units);
     
     let cost = document.forms['PUB_form'].cost.value;
     let scrp_value_PUB = document.forms['PUB_form'].scrp_value.value;
     for (let i = 0; i < useful_life; i++) {
         total_PUB += PUB_peryear_calculate(parseInt(cost), parseInt(scrp_value_PUB), total_units, production_from_yeartoyear[i]);
     }
-    console.log(total_PUB);
     document.getElementById('answer_PUB').textContent = "Depreciation Value ( LKR ) : " + total_PUB;
     reset_form_PUB();
     return false;
@@ -76,7 +65,6 @@ function PUB() {
 //This function will generate input boxes according to the number of years
 function input_production_per_year() {
     useful_life = document.forms['PUB_form'].useful_life.value;
-    console.log(useful_life);
 
     for (let i = useful_life; i > 0; i--) {
         let input_card = document.createElement('div');
@@ -131,7 +119,6 @@ function SLB_calculate(cost, scrp_value, useful_life) {
 
 function PUB_peryear_calculate(cost, scrp_value, units, production_per_year) {
     let PUB_for_year = ( ( cost - scrp_value ) / units ) * production_per_year;
-    console.log(PUB_for_year);
     return PUB_for_year;
 }
 
